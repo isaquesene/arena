@@ -1,7 +1,6 @@
 <?php
     $conn = mysqli_connect('localhost','root','','arena');
-
-	
+   
 
 
 if(isset($_POST['send'])){
@@ -16,7 +15,7 @@ if(isset($_POST['send'])){
 
 
     mysqli_query($conn, $request);
-    echo 'Cadastrado com sucesso!';
+    echo "<script>history.go(-2);</script>";
     //header('location:templates/TimeListView.tpl.php');
 }else{
     echo '';
@@ -47,7 +46,7 @@ if(isset($_POST['send'])){
                 <div class="card">
                     <div class="card-header">
                         <h4>Add Time 
-                            <button onclick="history.go(-2)" class="btn btn-danger float-end">BACK</button>
+                            <button onclick="history.go(-1)" class="btn btn-danger float-end">BACK</button>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -67,7 +66,11 @@ if(isset($_POST['send'])){
                             </div>
 							<div class="mb-3">
                                 <label>Status</label>
-                                <input type="text" name="status" class="form-control">
+                                <!--<input type="text" name="status" class="form-control">-->
+                                <select name="status" class="form-control">
+                                    <option value="Ativo">Ativo</option>
+                                    <option value="Inativo">Inativo</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <button type="submit" name="send" onclick="add()" class="btn btn-primary">Cadastrar</button>

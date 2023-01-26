@@ -1,5 +1,6 @@
 <?php
     require_once("conectar.php");
+   
 
 
 $id_time = $_GET['id_time'];
@@ -16,10 +17,9 @@ if(isset($_POST['edit'])){
     $result = mysqli_query($conn, $sql);
 
     if($result){
-        echo "Alterado com sucesso!";
+       // echo "Alterado com sucesso!";
         //header("location:status_edit.php");
-    }else{
-       // echo "erro: " . mysqli_error($conn);
+        echo "<script>history.go(-2);</script>";
     }
 }
 ?>
@@ -55,7 +55,7 @@ if(isset($_POST['edit'])){
                 <div class="card">
                     <div class="card-header">
                         <h4>Editar Time 
-                            <button onclick="history.go(-2)" class="btn btn-danger float-end">BACK</button>
+                            <button onclick="history.go(-1)" class="btn btn-danger float-end">BACK</button>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -75,7 +75,13 @@ if(isset($_POST['edit'])){
                             </div>
 							<div class="mb-3">
                                 <label>Status</label>
-                                <input type="text" name="status" class="form-control" value="<?php echo $row['status']?>">
+                                <!--<input type="text" name="status" class="form-control" value="<?php echo $row['status']?>">-->
+                                <select name="status" class="form-control">
+                                
+                                    <option value="<?php echo $row['id_time']?>"> <?php echo $row['status']?></option>
+                                    <option value="Ativo">Ativo</option>
+                                    <option value="Inativo">Inativo</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <button type="submit" name="edit" onclick="add()" class="btn btn-primary">Cadastrar</button>
