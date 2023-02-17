@@ -1,25 +1,53 @@
 <?php
-    $conn = mysqli_connect('localhost','root','','arena');
-   
+$conn = mysqli_connect('localhost','root','','arena');
+
+if ($_POST['tipo'] == 'checkboxes') 
+{
+
+    //recebendo socios
+    $socios = $_POST['socios'];
+
+    //transformando em array
+    $socios_array = explode(",",$socios);
+    
+    $beneficios = $_POST['beneficios'];
+    $beneficios_array = explode(",",$beneficios);
 
 
+    foreach ($socios_array as $socio) {
+        
+        foreach ($beneficios_array as $beneficio) {
+            //inserindo benefício por beneficio para cada socio
+            $query = "insert into historico_beneficio (id_socio,id_beneficio,status) values ($socio,$beneficio,'Ativo')";
+            $query_run = mysqli_query($conn, $query);
+        }   
+    }   
 
-if(isset($_POST['send'])){
-    $socio = $_POST['id_socio'];
-    $beneficio = $_POST['id_beneficio'];
-    $status = $_POST['status'];
+    $msg = "Benefícios cadastrados com sucesso!";
+    $status = true;
 
+    echo json_encode(array('status'=>$status,'msg'=>$msg));
+    exit;
+    
+}
 
-    $request = "insert into historico_beneficio(id_socio, id_beneficio, status) values 
-    ('$socio','$beneficio','$status')";
-
-
-    mysqli_query($conn, $request);
-    echo "<script>history.go(-2);</script>";
-}else{
-    echo '';
+if (isset($_POST['box'])) 
+{
+    $checkbox1 = $_POST['techno'];
+    //$chk = "";
+    foreach ($checkbox1 as $chk1) {
+        //$chk .= $chk1.",";
+        $query = "insert into historico_beneficio (id_beneficio) values ('$chk1')";
+        $query_run = mysqli_query($conn, $query);
+    }
+    if ($query_run) {
+        echo '<script>alert("Inserted Successfully")</script>';
+    } else {
+        echo'<script>alert("Failed To Insert")</script>';  
+    }
 }
 ?>
+<!--end checkbox-->
 
 
 <!doctype html>
